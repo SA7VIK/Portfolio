@@ -1,0 +1,318 @@
+# Python Backend
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environments
+portfolio_env/
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+.venv/
+
+# Environment Variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+backend/.env
+backend/env.production
+
+# IDE and Editor Files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Node.js Frontend
+portfolio-website/node_modules/
+portfolio-website/npm-debug.log*
+portfolio-website/yarn-debug.log*
+portfolio-website/yarn-error.log*
+portfolio-website/.pnpm-debug.log*
+
+# Build outputs
+portfolio-website/dist/
+portfolio-website/build/
+portfolio-website/.next/
+portfolio-website/out/
+
+# Coverage directory used by tools like istanbul
+portfolio-website/coverage/
+portfolio-website/*.lcov
+
+# nyc test coverage
+portfolio-website/.nyc_output
+
+# Dependency directories
+portfolio-website/jspm_packages/
+
+# Optional npm cache directory
+portfolio-website/.npm
+
+# Optional eslint cache
+portfolio-website/.eslintcache
+
+# Microbundle cache
+portfolio-website/.rpt2_cache/
+portfolio-website/.rts2_cache_cjs/
+portfolio-website/.rts2_cache_es/
+portfolio-website/.rts2_cache_umd/
+
+# Optional REPL history
+portfolio-website/.node_repl_history
+
+# Output of 'npm pack'
+portfolio-website/*.tgz
+
+# Yarn Integrity file
+portfolio-website/.yarn-integrity
+
+# parcel-bundler cache (https://parceljs.org/)
+portfolio-website/.cache
+portfolio-website/.parcel-cache
+
+# Next.js build output
+portfolio-website/.next
+
+# Nuxt.js build / generate output
+portfolio-website/.nuxt
+portfolio-website/dist
+
+# Gatsby files
+portfolio-website/.cache/
+portfolio-website/public
+
+# Storybook build outputs
+portfolio-website.out
+portfolio-website.storybook-out
+
+# Temporary folders
+portfolio-website/tmp/
+portfolio-website/temp/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# RAG System Data
+backend/app/data/rag_index.pkl
+backend/app/data/*.pkl
+backend/app/data/*.faiss
+backend/app/data/*.index
+
+# Model files and embeddings
+backend/models/
+backend/embeddings/
+backend/cache/
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Docker
+.dockerignore
+docker-compose.override.yml
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Backup files
+*.bak
+*.backup
+*.old
+
+# Local development
+.local
+.localhost
+
+# SSL certificates
+*.pem
+*.key
+*.crt
+*.csr
+
+# Terraform
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
+
+# Kubernetes
+*.kubeconfig
+
+# Monitoring and logging
+prometheus_data/
+grafana_data/
+loki_data/
+
+# Testing
+.coverage
+.pytest_cache/
+htmlcov/
+.tox/
+.nox/
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# pyenv
+.python-version
+
+# pipenv
+Pipfile.lock
+
+# PEP 582
+__pypackages__/
+
+# Celery
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# pytype static type analyzer
+.pytype/
+
+# Cython debug symbols
+cython_debug/
+
+# PyCharm
+.idea/
+
+# VS Code
+.vscode/
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+*~
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# macOS
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.tmp
+*.temp
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# Project specific
+# Add any project-specific files or directories here 
