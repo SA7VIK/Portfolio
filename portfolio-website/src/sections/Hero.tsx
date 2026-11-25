@@ -7,7 +7,7 @@ const STATS = [
   { value: '4', label: 'Healthcare products shipped end to end' },
   { value: '200+ GB/h', label: 'Real-time radar data processed' },
   { value: '30%', label: 'Efficiency gain in DRDO signal processing' },
-  { value: 'SIH ’23', label: 'National finalist among 100,000+ participants' },
+  { value: '15+', label: 'Technical articles on Medium & ai.security' },
 ]
 
 const ORGS = ['Symbian Health', 'DRDO', 'Ai.Tennis', 'IIT Jodhpur', 'Codeyoung', 'Google Developer Student Clubs']

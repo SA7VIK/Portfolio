@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { ArrowUpRight, BookOpen, Cpu, Network, Radar, Sigma } from 'lucide-react'
+import { ArrowUpRight, BookOpen, BrainCircuit, Cpu, Network, Radar, ShieldCheck, Sigma } from 'lucide-react'
 import clsx from 'clsx'
 import { Reveal, SectionHeader } from '../components/ui/primitives'
 import { useMediumPosts } from '../hooks/useMediumPosts'
@@ -9,6 +9,7 @@ import { PROFILE } from '../data/profile'
 
 const TOPIC_STYLE: Record<BlogTopic, { icon: React.FC<{ className?: string }>; hue: string; text: string }> = {
   'AI Engineering': { icon: Cpu, hue: '255,107,44', text: 'text-accent-300' },
+  'Machine Learning': { icon: BrainCircuit, hue: '56,189,248', text: 'text-sky-300' },
   'Distributed Systems': { icon: Network, hue: '129,140,248', text: 'text-indigo-300' },
   'Signal Processing': { icon: Radar, hue: '74,222,154', text: 'text-mint-400' },
   Math: { icon: Sigma, hue: '244,114,182', text: 'text-pink-300' },
@@ -115,7 +116,7 @@ const Blogs: React.FC = () => {
               Notes from the <span className="serif-accent text-ink-300">engine room.</span>
             </>
           }
-          description="I write on Medium about AI engineering, distributed systems and the signal processing behind defence radar — explained from first principles."
+          description="I write on Medium about AI engineering, machine learning, distributed systems and the signal processing behind defence radar — explained from first principles."
           action={
             <a href={PROFILE.medium} target="_blank" rel="noopener noreferrer" className="btn-ghost">
               <BookOpen className="h-4 w-4" /> Follow on Medium
@@ -225,6 +226,30 @@ const Blogs: React.FC = () => {
             )}
           </motion.div>
         </AnimatePresence>
+
+        <Reveal className="mt-4">
+          <a
+            href={PROFILE.aiSecurityBlog}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="card-surface group flex flex-col gap-4 p-5 transition-colors hover:border-white/15 sm:flex-row sm:items-center sm:p-6"
+          >
+            <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl border border-mint-500/25 bg-mint-500/10 text-mint-400">
+              <ShieldCheck className="h-5 w-5" />
+            </span>
+            <div className="min-w-0 flex-1">
+              <div className="font-mono text-[11px] uppercase tracking-[0.14em] text-ink-500">Also writing for</div>
+              <div className="mt-1 text-[15px] text-ink-100">
+                <span className="font-medium text-white">ai.security</span> — lead blog writer, 8–10 articles on AI
+                security
+              </div>
+            </div>
+            <span className="inline-flex items-center gap-1.5 text-sm font-medium text-white">
+              Read the blog
+              <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+            </span>
+          </a>
+        </Reveal>
       </div>
     </section>
   )

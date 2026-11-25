@@ -1,5 +1,5 @@
 import React from 'react'
-import { MapPin } from 'lucide-react'
+import { ArrowUpRight, MapPin } from 'lucide-react'
 import { Reveal } from '../components/ui/primitives'
 import { EXPERIENCE } from '../data/profile'
 
@@ -72,6 +72,17 @@ const Experience: React.FC = () => {
                       </li>
                     ))}
                   </ul>
+                )}
+                {e.link && (
+                  <a
+                    href={e.link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-3 inline-flex items-center gap-1 text-sm text-ink-200 transition-colors hover:text-white"
+                  >
+                    <span className="link-underline">{e.link.label}</span>
+                    <ArrowUpRight className="h-3.5 w-3.5" />
+                  </a>
                 )}
             </Reveal>
           ))}

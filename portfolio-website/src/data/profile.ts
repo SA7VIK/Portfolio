@@ -5,6 +5,7 @@ export const PROFILE = {
   github: 'https://github.com/sa7vik',
   linkedin: 'https://www.linkedin.com/in/sa7vik/',
   medium: 'https://medium.com/@sa7vik',
+  aiSecurityBlog: 'https://ai.security/blog',
   resume: 'https://drive.google.com/file/d/1gSwhAMhyevVlYe8QRe-DzlR3UCvpuFGV/view?usp=sharing',
 }
 
@@ -15,6 +16,7 @@ export interface Experience {
   summary: string
   highlights?: string[]
   current?: boolean
+  link?: { label: string; url: string }
 }
 
 export const EXPERIENCE: Experience[] = [
@@ -25,6 +27,15 @@ export const EXPERIENCE: Experience[] = [
     current: true,
     summary:
       'Back at Symbian Health after my time at DRDO, building on the healthcare products I first shipped here as a Software Development Engineer.',
+  },
+  {
+    role: 'Lead Blog Writer · Freelance',
+    company: 'ai.security',
+    location: 'Remote',
+    summary:
+      'Lead writer for the ai.security blog, turning AI security research into clear, practical articles for engineers and security teams.',
+    highlights: ['8–10 long-form articles published on AI security'],
+    link: { label: 'Read the ai.security blog', url: 'https://ai.security/blog' },
   },
   {
     role: 'Junior Research Fellow',
@@ -147,11 +158,4 @@ export const SKILLS: { group: string; items: string[] }[] = [
     group: 'Product engineering',
     items: ['Python', 'FastAPI', 'Django REST', 'React', 'Docker', 'AWS CDK', 'Google Cloud', 'Git'],
   },
-]
-
-export const ACHIEVEMENTS: { title: string; detail: string }[] = [
-  { title: 'GATE DA 2024', detail: 'Qualified in Data Science & Artificial Intelligence' },
-  { title: 'Smart India Hackathon 2023', detail: 'National finalist among 100,000+ participants' },
-  { title: 'Rajasthan IT Day Hackathon', detail: 'Certificate of achievement, state level' },
-  { title: 'IIT Jodhpur', detail: 'Research internship in machine learning' },
 ]

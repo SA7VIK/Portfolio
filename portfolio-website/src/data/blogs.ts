@@ -1,4 +1,4 @@
-export type BlogTopic = 'AI Engineering' | 'Distributed Systems' | 'Signal Processing' | 'Math'
+export type BlogTopic = 'AI Engineering' | 'Machine Learning' | 'Distributed Systems' | 'Signal Processing' | 'Math'
 
 export interface Blog {
   title: string
@@ -45,6 +45,7 @@ export const BLOGS: Blog[] = [
       'Why language models give different answers to the same question, why they make things up, and what engineers can do about it.',
     topic: 'AI Engineering',
     series: 'AI Engineering Simplified',
+    publishedAt: '2025-08-01',
   },
   {
     title: 'AI Engineering Simplified II — Understanding the Training Journey of AI Models',
@@ -53,6 +54,7 @@ export const BLOGS: Blog[] = [
       'Pre-training, fine-tuning and preference alignment: the stages a model goes through before it reaches your API call.',
     topic: 'AI Engineering',
     series: 'AI Engineering Simplified',
+    publishedAt: '2025-07-18',
   },
   {
     title: 'AI Engineering Simplified I — Basics of LLMs',
@@ -61,6 +63,14 @@ export const BLOGS: Blog[] = [
       'Tokens, embeddings, attention and sampling: a ground-up introduction to how large language models work.',
     topic: 'AI Engineering',
     series: 'AI Engineering Simplified',
+    publishedAt: '2025-06-27',
+  },
+  {
+    title: 'Why LSTMs Changed the Way Machines Remember',
+    url: 'https://medium.com/@sa7vik/why-lstms-changed-the-way-machines-remember-c9e139993995',
+    excerpt:
+      'How vanilla RNNs lost context to vanishing gradients, and how the input, forget and output gates of an LSTM let networks remember what matters.',
+    topic: 'Machine Learning',
   },
   {
     title: 'Cracking Linear Algebra: Part 2',
@@ -70,12 +80,20 @@ export const BLOGS: Blog[] = [
     topic: 'Math',
     series: 'Cracking Linear Algebra',
   },
+  {
+    title: 'How Logistic Regression Works!',
+    url: 'https://medium.com/@sa7vik/how-logistic-regression-works-ff6990f2b908',
+    excerpt:
+      'Logistic regression from the ground up: the sigmoid, the decision boundary, and how the model learns its weights.',
+    topic: 'Machine Learning',
+  },
 ]
 
 const TOPIC_RULES: [BlogTopic, RegExp][] = [
   ['Signal Processing', /radar|signal|mvdr|beamform|jamm|dsp/i],
   ['Distributed Systems', /distributed|replication|clock|consensus|database|system design/i],
   ['Math', /algebra|calculus|probability|\bgate\b|\bmath/i],
+  ['Machine Learning', /lstm|rnn|regression|neural net|cnn|classifier|machine learning/i],
   ['AI Engineering', /.*/],
 ]
 

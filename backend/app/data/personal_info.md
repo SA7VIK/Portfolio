@@ -15,6 +15,9 @@ I am a Software Engineer at Symbian Health and an AI engineer & researcher speci
 - **Software Engineer** at Symbian Health (Rikton Inc), Boston (remote) — rejoined after DRDO
 
 ## Professional Experience
+- **Lead Blog Writer (Freelance)** at ai.security (ai.security/blog)
+  - Wrote 8–10 long-form articles on AI security for engineers and security teams
+
 - **Junior Research Fellow** at DRDO - Centre for Airborne Systems, Bengaluru
   - Architected surveillance radar systems with BLAS/MKL optimization
   - Processed 200+ GB/hour of real-time signal data with 30% improved efficiency
@@ -49,7 +52,10 @@ I am a Software Engineer at Symbian Health and an AI engineer & researcher speci
 - How We Suppress Jamming in Defense Radar Using MVDR (Without Losing the Target)
 - Why Your Computer Can't Tell Time (And How Atomic Clocks Are Quietly Saving the World)
 - How Big Tech Keeps Your Data Safe: Replication in Distributed Systems
+- Why LSTMs Changed the Way Machines Remember
+- How Logistic Regression Works!
 - Cracking Linear Algebra (GATE preparation series)
+- Also lead blog writer for ai.security (8–10 AI security articles)
 
 ## Education
 - **Bachelor of Technology in Information Technology** from Jabalpur Engineering College
