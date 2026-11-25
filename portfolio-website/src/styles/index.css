@@ -5,139 +5,147 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
-  
+
   body {
-    @apply bg-gray-50 text-gray-900 font-sans;
+    @apply bg-ink-950 text-ink-100 font-sans;
+    font-feature-settings: 'ss01', 'cv11';
   }
-  
-  * {
-    @apply border-gray-200;
-  }
-  
-  /* Custom selection color */
+
   ::selection {
-    @apply bg-primary-500/20 text-gray-900;
+    @apply bg-accent-500/30 text-white;
   }
-  
-  /* Custom scrollbar */
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-accent-500/70 ring-offset-2 ring-offset-ink-950;
+  }
+
   ::-webkit-scrollbar {
-    width: 8px;
+    width: 10px;
   }
-  
   ::-webkit-scrollbar-track {
-    @apply bg-gray-100;
+    @apply bg-ink-950;
   }
-  
   ::-webkit-scrollbar-thumb {
-    @apply bg-primary-300 rounded-full;
+    @apply bg-ink-700 rounded-full border-2 border-solid border-ink-950;
   }
-  
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-primary-400;
+    @apply bg-ink-600;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }
 
 @layer components {
-  .section-padding {
-    @apply px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24;
+  .container-x {
+    @apply mx-auto w-full max-w-6xl px-5 sm:px-8;
   }
-  
-  .container-custom {
-    @apply max-w-7xl mx-auto;
-  }
-  
-  .heading-primary {
-    @apply text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900;
-  }
-  
-  .heading-secondary {
-    @apply text-2xl sm:text-3xl lg:text-4xl font-semibold text-gray-800;
-  }
-  
-  .text-gradient {
-    @apply bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent;
-  }
-  
-  .btn-primary {
-    @apply inline-flex items-center px-6 py-3 border border-transparent text-base font-mono font-medium rounded-lg text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-all duration-200;
-  }
-  
-  .btn-secondary {
-    @apply inline-flex items-center px-6 py-3 border border-gray-300 text-base font-mono font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-all duration-200;
-  }
-  
-  .card {
-    @apply bg-white rounded-xl shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300;
-  }
-  
-  .skill-tag {
-    @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-primary-100 text-primary-800 hover:bg-primary-200 transition-colors duration-200;
-  }
-  
-  .project-card {
-    @apply bg-white rounded-xl shadow-lg border border-gray-100 p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-1;
-  }
-  
-  .project-card-dark {
-    @apply bg-gray-900 rounded-xl shadow-lg border border-gray-700 p-6 hover:shadow-xl transition-shadow duration-150 hover:-translate-y-1;
-  }
-  
-  .math-equation {
-    @apply absolute opacity-5 font-handwriting text-2xl text-primary-600 pointer-events-none;
-  }
-}
 
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-}
+  .section {
+    @apply relative py-24 sm:py-28;
+  }
 
-::-webkit-scrollbar-track {
-  @apply bg-gray-100;
-}
+  .eyebrow {
+    @apply inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-ink-400;
+  }
 
-::-webkit-scrollbar-thumb {
-  @apply bg-primary-300 rounded-full;
-}
+  .h-display {
+    @apply font-sans font-semibold tracking-tightest text-white;
+  }
 
-::-webkit-scrollbar-thumb:hover {
-  @apply bg-primary-400;
-}
+  .serif-accent {
+    @apply font-serif font-normal italic tracking-normal;
+  }
 
-/* Math equation animations */
-@keyframes float {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(-10px) rotate(2deg); }
-}
+  .card-surface {
+    @apply relative rounded-2xl border border-white/[0.07] bg-ink-900/70;
+    box-shadow:
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.04),
+      0 1px 2px rgba(0, 0, 0, 0.4);
+  }
 
-.math-equation {
-  animation: float 8s ease-in-out infinite;
-}
+  .chip {
+    @apply inline-flex items-center rounded-full border border-white/[0.08] bg-white/[0.03] px-2.5 py-1 font-mono text-[11px] text-ink-300;
+  }
 
-.math-equation:nth-child(2n) {
-  animation-delay: -2s;
-}
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium transition-all duration-200;
+  }
 
-.math-equation:nth-child(3n) {
-  animation-delay: -4s;
-}
+  .btn-light {
+    @apply btn bg-white text-ink-950 hover:bg-ink-200;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1), 0 8px 30px -8px rgba(255, 255, 255, 0.35);
+  }
 
-.math-equation:nth-child(4n) {
-  animation-delay: -6s;
+  .btn-ghost {
+    @apply btn border border-white/10 bg-white/[0.03] text-ink-100 hover:border-white/20 hover:bg-white/[0.06];
+  }
+
+  .link-underline {
+    @apply relative;
+  }
+  .link-underline::after {
+    content: '';
+    @apply absolute -bottom-0.5 left-0 h-px w-full origin-left scale-x-0 bg-current transition-transform duration-300;
+  }
+  .link-underline:hover::after {
+    @apply scale-x-100;
+  }
 }
 
 @layer utilities {
-  .animate-gradient-x {
-    animation: gradient-x 3s ease-in-out infinite alternate;
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+
+  .bg-dots {
+    background-image: radial-gradient(rgba(255, 255, 255, 0.09) 1px, transparent 1px);
+    background-size: 18px 18px;
+  }
+
+  .mask-fade-b {
+    mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+  }
+
+  .mask-radial {
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, black 30%, transparent 80%);
+  }
+
+  .mask-fade-x {
+    mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+  }
+
+  .text-shine {
+    background: linear-gradient(110deg, #ffffff 35%, #ffb38a 50%, #ffffff 65%);
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    @apply animate-shimmer;
+  }
+
+  .noise::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 }
-
-@keyframes gradient-x {
-  0% {
-    background-position: 0% 50%;
-  }
-  100% {
-    background-position: 100% 50%;
-  }
-} 

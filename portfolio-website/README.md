@@ -1,14 +1,14 @@
 # Satvik's Portfolio Website
 
-A modern, responsive portfolio website built with React, TypeScript, and Tailwind CSS. Features a clean design inspired by modern portfolio websites with animated LaTeX equations in the background.
+A dark, startup-style portfolio built with React, TypeScript, Tailwind CSS and Framer Motion.
 
 ## 🚀 Features
 
 - **Modern Design**: Clean, professional layout with smooth animations
 - **Responsive**: Fully responsive design that works on all devices
 - **Interactive**: Smooth scroll animations and hover effects
-- **Math Background**: Animated LaTeX equations floating in the background
-- **Sections**: Hero, Projects, Skills, About, and Contact sections
+- **Sections**: Hero, Symbian Health product showcase, side projects, experience, toolkit, writing (Medium) and contact
+- **Live Medium feed**: the Writing section syncs from the backend `/medium-blogs` endpoint and falls back to a bundled snapshot
 - **Performance**: Optimized with Vite for fast development and builds
 
 ## 🛠️ Tech Stack
@@ -16,8 +16,7 @@ A modern, responsive portfolio website built with React, TypeScript, and Tailwin
 - **Frontend**: React 18, TypeScript, Vite
 - **Styling**: Tailwind CSS, Framer Motion
 - **Icons**: Lucide React
-- **Math Rendering**: KaTeX for LaTeX equations
-- **Fonts**: Inter, JetBrains Mono, Kalam (Google Fonts)
+- **Fonts**: Geist, Geist Mono, Instrument Serif (Google Fonts)
 
 ## 📦 Installation
 
@@ -41,28 +40,15 @@ npm run dev
 
 ## 🎨 Customization
 
-### Personal Information
-Update the following files with your information:
-- `src/sections/Hero.tsx` - Update name, title, and description
-- `src/sections/Projects.tsx` - Add your projects
-- `src/sections/Skills.tsx` - Update skills list
-- `src/sections/About.tsx` - Update about content and experience
-- `src/sections/Contact.tsx` - Update contact information and social links
+### Content
+Almost all copy lives in `src/data/`:
+- `profile.ts` — links, experience, side projects, skills, recognition
+- `products.ts` — the Symbian Health products
+- `blogs.ts` — Medium snapshot (add new posts at the top; the live feed fills in dates and read times)
 
 ### Styling
-- Colors: Update the color palette in `tailwind.config.js`
-- Fonts: Modify font families in `tailwind.config.js`
-- Animations: Customize animations in `src/styles/index.css`
-
-### Math Equations
-Add or modify LaTeX equations in `src/components/MathBackground.tsx`:
-```typescript
-const equations = [
-  '\\nabla \\cdot \\vec{E} = \\frac{\\rho}{\\epsilon_0}',
-  '\\int_{-\\infty}^{\\infty} e^{-x^2} dx = \\sqrt{\\pi}',
-  // Add more equations here
-]
-```
+- Design tokens (colors, fonts, animations): `tailwind.config.js`
+- Shared component classes (`card-surface`, `chip`, `btn-light`…): `src/styles/index.css`
 
 ## 📝 Available Scripts
 

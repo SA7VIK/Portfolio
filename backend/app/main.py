@@ -4,6 +4,11 @@ from pydantic import BaseModel
 from typing import Optional, List
 import uvicorn
 import os
+import re
+import time
+from datetime import datetime, timezone
+from html import unescape
+
 import feedparser
 from fastapi.responses import JSONResponse
 
@@ -174,35 +179,68 @@ async def get_personal_info():
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error loading personal info: {str(e)}")
 
+_MEDIUM_CACHE: dict = {"at": 0.0, "posts": None}
+_MEDIUM_TTL_SECONDS = 60 * 30
+
+
+def _strip_html(html: str) -> str:
+    text = re.sub(r"<(script|style)[^>]*>.*?</\1>", " ", html or "", flags=re.S | re.I)
+    text = re.sub(r"<[^>]+>", " ", text)
+    return re.sub(r"\s+", " ", unescape(text)).strip()
+
+
+def _excerpt(text: str, limit: int = 200) -> str:
+    if len(text) <= limit:
+        return text
+    return text[:limit].rsplit(" ", 1)[0] + "…"
+
+
 @app.get("/medium-blogs")
 async def get_medium_blogs():
-    """Fetch and parse Medium RSS feed for @sa7vik and return blog post data as JSON."""
+    """Fetch and parse the Medium RSS feed for @sa7vik and return clean post data as JSON.
+
+    Results are cached in memory for 30 minutes so the portfolio doesn't hit Medium on every visit.
+    """
+    if _MEDIUM_CACHE["posts"] is not None and time.time() - _MEDIUM_CACHE["at"] < _MEDIUM_TTL_SECONDS:
+        return JSONResponse(content=_MEDIUM_CACHE["posts"])
+
     rss_url = "https://medium.com/feed/@sa7vik"
     try:
         feed = feedparser.parse(rss_url)
         blogs = []
         for entry in feed.entries:
-            # Try to extract the image from the content or media:content
+            html = entry.content[0].value if entry.get("content") else entry.get("summary", "")
             image_url = None
-            if 'media_content' in entry and entry.media_content:
-                image_url = entry.media_content[0].get('url')
-            elif 'content' in entry and entry.content:
-                import re
-                img_match = re.search(r'<img[^>]+src=["\']([^"\']+)["\']', entry.content[0].value)
+            if entry.get("media_content"):
+                image_url = entry.media_content[0].get("url")
+            else:
+                img_match = re.search(r'<img[^>]+src=["\']([^"\']+)["\']', html)
                 if img_match:
                     image_url = img_match.group(1)
+            text = _strip_html(html)
+            words = len(text.split())
+            published = None
+            if entry.get("published_parsed"):
+                published = datetime(*entry.published_parsed[:6], tzinfo=timezone.utc).isoformat()
             blogs.append({
                 "title": entry.title,
-                "description": entry.summary,
+                "excerpt": _excerpt(text),
                 "imageUrl": image_url,
-                "publishDate": entry.published,
-                "mediumUrl": entry.link,
-                "tags": [tag.term for tag in entry.tags] if 'tags' in entry else [],
-                "readTime": entry.get('reading_time', "")
+                "publishedAt": published,
+                "mediumUrl": entry.link.split("?")[0],
+                "tags": [tag.term for tag in entry.get("tags", [])],
+                "readMinutes": max(1, round(words / 230)) if words else None,
             })
+        if blogs:
+            _MEDIUM_CACHE.update(at=time.time(), posts=blogs)
+        elif _MEDIUM_CACHE["posts"] is not None:
+            blogs = _MEDIUM_CACHE["posts"]
         return JSONResponse(content=blogs)
     except Exception as e:
+        if _MEDIUM_CACHE["posts"] is not None:
+            return JSONResponse(content=_MEDIUM_CACHE["posts"])
         raise HTTPException(status_code=500, detail=f"Error fetching Medium blogs: {str(e)}")
+
 
 if __name__ == "__main__":
     uvicorn.run(

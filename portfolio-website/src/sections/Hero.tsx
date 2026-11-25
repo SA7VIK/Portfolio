@@ -1,160 +1,133 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React from 'react'
 import { motion } from 'framer-motion'
-import { ArrowDown, Github, Linkedin, Mail, MessageCircle } from 'lucide-react'
+import { ArrowRight, ArrowUpRight, Github, Linkedin, Mail, Sparkles } from 'lucide-react'
+import { PROFILE } from '../data/profile'
 
-const NAME = 'Satvik Singh'
-const SCRAMBLE_CHARS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
+const STATS = [
+  { value: '4', label: 'Healthcare products shipped end to end' },
+  { value: '200+ GB/h', label: 'Real-time radar data processed' },
+  { value: '30%', label: 'Efficiency gain in DRDO signal processing' },
+  { value: 'SIH ’23', label: 'National finalist among 100,000+ participants' },
+]
 
-const ScrambleName: React.FC = () => {
-  const [display, setDisplay] = useState<string[]>(
-    Array.from(NAME, c => (c === ' ' ? ' ' : SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)]))
-  )
+const ORGS = ['DRDO', 'Symbian Health', 'Ai.Tennis', 'IIT Jodhpur', 'Codeyoung', 'Google Developer Student Clubs']
 
-  useEffect(() => {
-    console.log('ScrambleName animation started')
-    let timeouts: number[] = []
-    let revealed = 0
-    function revealNext() {
-      if (revealed >= NAME.length) return
-      let scrambleInterval = window.setInterval(() => {
-        setDisplay((prev) =>
-          prev.map((char, idx) =>
-            idx < revealed
-              ? NAME[idx]
-              : NAME[idx] === ' '
-                ? ' '
-                : SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)]
-          )
-        )
-      }, 30)
-      timeouts.push(scrambleInterval)
-      setTimeout(() => {
-        clearInterval(scrambleInterval)
-        setDisplay((prev) =>
-          prev.map((char, idx) => (idx <= revealed ? NAME[idx] : char))
-        )
-        revealed++
-        revealNext()
-      }, 250)
-    }
-    revealNext()
-    return () => timeouts.forEach(clearInterval)
-  }, [])
-
-  // Fallback: if display is empty, show the name directly
-  if (!display || display.length === 0) {
-    return <span className="text-black">{NAME}</span>
-  }
-
-  return (
-    <span
-      style={{
-        color: 'black',
-      }}
-      className="tracking-widest"
-    >
-      {display.map((char, idx) => (
-        <span key={idx} style={{ minWidth: '0.6em', display: 'inline-block' }}>{char}</span>
-      ))}
-    </span>
-  )
-}
+const fade = (delay: number) => ({
+  initial: { opacity: 0, y: 18, filter: 'blur(6px)' },
+  animate: { opacity: 1, y: 0, filter: 'blur(0px)' },
+  transition: { duration: 0.7, delay, ease: [0.21, 0.47, 0.32, 0.98] },
+})
 
 const Hero: React.FC = () => {
-  const gradientRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    if (gradientRef.current) {
-      gradientRef.current.style.display = 'none'
-      // Force reflow
-      // eslint-disable-next-line
-      gradientRef.current.offsetHeight
-      gradientRef.current.style.display = ''
-    }
-  }, [])
-
   return (
-    <section className="section-padding min-h-screen flex items-center justify-center">
-      <div className="container-custom">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-center"
-        >
-          {/* Main Heading with scramble animation */}
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.8 }}
-            className="text-5xl sm:text-6xl lg:text-7xl font-bold text-gray-900 mb-8 font-mono"
-          >
-            <ScrambleName />
-          </motion.h1>
-          
-          {/* Subtitle */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.8 }}
-            className="mb-8"
-          >
-            <h2 className="text-xl sm:text-2xl lg:text-3xl font-mono text-gray-600 mb-6">
-              <span className="text-primary-600">const</span> engineer = <span className="text-accent-600">'AI Engineer & Researcher'</span>;
-            </h2>
-            <p className="text-lg sm:text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed font-mono mb-4">
-              AI Engineer crafting <span className="text-green-600">high-performance computing</span> algorithms and <span className="text-green-600">intelligent</span> solutions. Because apparently, making machines think isn't enough—they need to do it faster than humans can blink.
-            </p>
+    <section id="top" className="noise relative overflow-hidden pb-8 pt-36 sm:pt-44">
+      {/* Backdrop */}
+      <div aria-hidden className="pointer-events-none absolute inset-0">
+        <div className="bg-grid mask-radial absolute inset-0" />
+        <div className="absolute left-1/2 top-[-18rem] h-[38rem] w-[60rem] -translate-x-1/2 rounded-full bg-accent-500/[0.14] blur-[120px]" />
+        <div className="absolute left-[12%] top-40 h-72 w-72 rounded-full bg-indigo-500/[0.08] blur-[100px]" />
+      </div>
 
-          </motion.div>
-          
-          {/* CTA Buttons with animated gradient bar */}
-          <div className="relative flex flex-col items-center mb-12">
-            {/* Glowing gradient bar behind buttons */}
-            <div
-              ref={gradientRef}
-              style={{ willChange: 'transform, opacity' }}
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-24 w-[420px] max-w-full bg-gradient-to-r from-primary-500 via-secondary-400 to-accent-400 opacity-30 rounded-full pointer-events-none animate-gradient-x z-0 blur-2xl"
-            />
-            <div className="relative z-10 flex flex-col sm:flex-row gap-4">
+      <div className="container-x relative">
+        <motion.a
+          {...fade(0)}
+          href="#work"
+          className="group mx-auto flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] py-1 pl-1 pr-3 text-xs text-ink-300 backdrop-blur transition-colors hover:border-white/20 hover:text-white sm:text-sm"
+        >
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-white/[0.06] px-2.5 py-0.5 text-white">
+            <span className="h-1.5 w-1.5 animate-pulse-dot rounded-full bg-mint-400" />
+            Now
+          </span>
+          Researcher at DRDO · 4 products shipped at Symbian Health
+          <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+        </motion.a>
+
+        <motion.h1
+          {...fade(0.08)}
+          className="h-display mx-auto mt-8 max-w-4xl text-center text-[2.75rem] leading-[1.02] sm:text-6xl lg:text-[5.25rem]"
+        >
+          I build AI systems
+          <br className="hidden sm:block" /> that{' '}
+          <span className="serif-accent text-shine pr-1">actually ship.</span>
+        </motion.h1>
+
+        <motion.p
+          {...fade(0.16)}
+          className="mx-auto mt-7 max-w-2xl text-center text-base leading-relaxed text-ink-300 sm:text-lg"
+        >
+          I’m <span className="text-white">Satvik Singh</span>, an AI engineer who takes ideas from research to
+          production — real-time radar signal processing at DRDO, and four healthcare products built from zero at
+          Symbian Health.
+        </motion.p>
+
+        <motion.div {...fade(0.24)} className="mt-10 flex flex-wrap items-center justify-center gap-3">
+          <a href="/chatbot" className="btn-light">
+            <Sparkles className="h-4 w-4" />
+            Ask my AI anything
+          </a>
+          <a href={PROFILE.resume} target="_blank" rel="noopener noreferrer" className="btn-ghost">
+            View resume <ArrowUpRight className="h-4 w-4 text-ink-400" />
+          </a>
+          <div className="ml-1 flex items-center gap-1">
+            {[
+              { href: PROFILE.github, icon: Github, label: 'GitHub' },
+              { href: PROFILE.linkedin, icon: Linkedin, label: 'LinkedIn' },
+              { href: `mailto:${PROFILE.email}`, icon: Mail, label: 'Email' },
+            ].map(({ href, icon: Icon, label }) => (
               <a
-                href="/chatbot"
-                className="flex items-center gap-2 px-6 py-3 bg-white/30 backdrop-blur-md border border-white/30 rounded-xl font-mono font-semibold text-black shadow-lg hover:scale-105 hover:brightness-110 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-400"
-                style={{ WebkitBackdropFilter: 'blur(12px)' }}
+                key={label}
+                href={href}
+                aria-label={label}
+                {...(href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                className="grid h-10 w-10 place-items-center rounded-full text-ink-400 transition-colors hover:bg-white/[0.06] hover:text-white"
               >
-                <MessageCircle className="w-5 h-5 mr-2" />
-                Ask My AI
+                <Icon className="h-[18px] w-[18px]" />
               </a>
-              <a
-                href="https://drive.google.com/file/d/1gSwhAMhyevVlYe8QRe-DzlR3UCvpuFGV/view?usp=sharing"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 px-6 py-3 bg-white/20 backdrop-blur-md border border-white/20 rounded-xl font-mono font-semibold text-black shadow hover:scale-105 hover:brightness-110 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-400"
-                style={{ WebkitBackdropFilter: 'blur(12px)' }}
-              >
-                Resume
-              </a>
-            </div>
+            ))}
           </div>
         </motion.div>
-        
-        {/* Scroll Indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1, duration: 0.8 }}
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+
+        {/* Stats */}
+        <motion.dl
+          {...fade(0.34)}
+          className="mx-auto mt-20 grid max-w-5xl grid-cols-2 overflow-hidden rounded-2xl border border-white/[0.07] bg-white/[0.015] backdrop-blur-sm lg:grid-cols-4"
         >
-          <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-          >
-            <ArrowDown className="w-6 h-6 text-gray-400" />
-          </motion.div>
+          {STATS.map((s, i) => (
+            <div
+              key={s.label}
+              className={`p-5 sm:p-7 ${i % 2 === 1 ? 'border-l' : ''} ${i >= 2 ? 'border-t lg:border-t-0' : ''} ${
+                i === 2 ? 'lg:border-l' : ''
+              } border-white/[0.07]`}
+            >
+              <dt className="sr-only">{s.label}</dt>
+              <dd className="text-2xl font-semibold tracking-tight text-white sm:text-3xl">{s.value}</dd>
+              <dd className="mt-1.5 text-xs leading-snug text-ink-400 sm:text-sm">{s.label}</dd>
+            </div>
+          ))}
+        </motion.dl>
+
+        {/* Org marquee */}
+        <motion.div {...fade(0.44)} className="mt-14">
+          <p className="text-center font-mono text-[11px] uppercase tracking-[0.18em] text-ink-500">
+            Research & engineering at
+          </p>
+          <div className="mask-fade-x relative mt-6 overflow-hidden">
+            <div className="flex w-max animate-marquee gap-14 pr-14">
+              {[...ORGS, ...ORGS].map((o, i) => (
+                <span
+                  key={i}
+                  aria-hidden={i >= ORGS.length}
+                  className="whitespace-nowrap text-lg font-semibold tracking-tight text-ink-500 transition-colors hover:text-ink-200"
+                >
+                  {o}
+                </span>
+              ))}
+            </div>
+          </div>
         </motion.div>
       </div>
     </section>
   )
 }
 
-export default Hero 
+export default Hero

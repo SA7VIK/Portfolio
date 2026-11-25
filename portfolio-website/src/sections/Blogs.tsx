@@ -1,168 +1,233 @@
-import React, { useEffect, useState } from 'react'
-import { motion } from 'framer-motion'
-import { ExternalLink, Calendar, Clock } from 'lucide-react'
+import React, { useMemo, useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
+import { ArrowUpRight, BookOpen, Cpu, Network, Radar, Sigma } from 'lucide-react'
+import clsx from 'clsx'
+import { Reveal, SectionHeader } from '../components/ui/primitives'
+import { useMediumPosts } from '../hooks/useMediumPosts'
+import type { Blog, BlogTopic } from '../data/blogs'
+import { PROFILE } from '../data/profile'
 
-interface Blog {
-  title: string
-  description: string
-  imageUrl: string | null
-  readTime: string
-  publishDate: string
-  mediumUrl: string
-  tags: string[]
+const TOPIC_STYLE: Record<BlogTopic, { icon: React.FC<{ className?: string }>; hue: string; text: string }> = {
+  'AI Engineering': { icon: Cpu, hue: '255,107,44', text: 'text-accent-300' },
+  'Distributed Systems': { icon: Network, hue: '129,140,248', text: 'text-indigo-300' },
+  'Signal Processing': { icon: Radar, hue: '74,222,154', text: 'text-mint-400' },
+  Math: { icon: Sigma, hue: '244,114,182', text: 'text-pink-300' },
 }
 
-const staticBlogs: Blog[] = [
-  {
-    title: 'Building a RAG-Powered Portfolio Chatbot with FastAPI and React',
-    description: 'A comprehensive guide to implementing Retrieval-Augmented Generation for portfolio chatbots, covering FastAPI backend setup, React frontend integration, and real-time chat functionality.',
-    imageUrl: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400&h=250&fit=crop',
-    readTime: '8 min read',
-    publishDate: '2024-01-15',
-    mediumUrl: 'https://medium.com/@sa7vik/building-a-rag-powered-portfolio-chatbot-with-fastapi-and-react',
-    tags: ['AI', 'RAG', 'FastAPI', 'React', 'Chatbot']
-  },
-  {
-    title: 'The Future of Web Development: Emerging Technologies and Trends',
-    description: 'Exploring cutting-edge technologies and trends that will shape the future of web development, from AI integration to new frameworks and development methodologies.',
-    imageUrl: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=250&fit=crop',
-    readTime: '12 min read',
-    publishDate: '2024-01-10',
-    mediumUrl: 'https://medium.com/@sa7vik/the-future-of-web-development-emerging-technologies-and-trends',
-    tags: ['Web Development', 'Technology', 'Trends', 'AI']
-  },
-  {
-    title: 'Optimizing React Performance: A Practical Guide for Developers',
-    description: 'Practical techniques and best practices for optimizing React applications, including code splitting, memoization, and performance monitoring strategies.',
-    imageUrl: 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=400&h=250&fit=crop',
-    readTime: '15 min read',
-    publishDate: '2024-01-05',
-    mediumUrl: 'https://medium.com/@sa7vik/optimizing-react-performance-a-practical-guide-for-developers',
-    tags: ['React', 'Performance', 'JavaScript', 'Optimization']
-  },
-  {
-    title: 'From Junior to Senior: My Development Journey and Lessons Learned',
-    description: 'Personal insights and valuable lessons learned while transitioning from junior to senior developer, including technical growth, soft skills, and career advancement strategies.',
-    imageUrl: 'https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?w=400&h=250&fit=crop',
-    readTime: '10 min read',
-    publishDate: '2024-01-01',
-    mediumUrl: 'https://medium.com/@sa7vik/from-junior-to-senior-my-development-journey-and-lessons-learned',
-    tags: ['Career', 'Development', 'Growth', 'Leadership']
-  }
-]
+const formatDate = (iso?: string) =>
+  iso ? new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : undefined
 
-const BlogCard: React.FC<{ blog: Blog }> = ({ blog }) => {
-  const [imgLoaded, setImgLoaded] = useState(false)
+const partOf = (b: Blog) => {
+  if (!b.series) return undefined
+  const m = b.title.slice(b.series.length).match(/\b([IVX]+|\d+)\b/i)
+  return m ? `Part ${m[1].toUpperCase()}` : undefined
+}
+
+const Meta: React.FC<{ b: Blog; className?: string }> = ({ b, className }) => {
+  const s = TOPIC_STYLE[b.topic]
+  const part = partOf(b)
+  const bits = [
+    // The title already names the series, so the label only needs the part number.
+    b.series ? (b.title.toLowerCase().startsWith(b.series.toLowerCase()) && part ? `Series · ${part}` : b.series) : b.topic,
+    formatDate(b.publishedAt),
+    b.readMinutes ? `${b.readMinutes} min read` : undefined,
+  ].filter(Boolean) as string[]
   return (
-    <motion.a
-      key={blog.mediumUrl || blog.title}
-      href={blog.mediumUrl || '#'}
-      target="_blank"
-      rel="noopener noreferrer"
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8 }}
-      viewport={{ once: true }}
-      className="bg-white rounded-xl shadow-lg overflow-hidden group relative z-10 transition-shadow transition-transform duration-150 hover:shadow-xl hover:-translate-y-1 cursor-pointer block"
+    <div className={clsx('flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[11px] text-ink-500', className)}>
+      {bits.map((x, i) => (
+        <React.Fragment key={x}>
+          {i > 0 && <span className="text-ink-700">·</span>}
+          <span className={i === 0 ? s.text : undefined}>{x}</span>
+        </React.Fragment>
+      ))}
+    </div>
+  )
+}
+
+/** Generated cover art per topic so every post looks consistent, image or not. */
+const Cover: React.FC<{ b: Blog; size?: 'lg' | 'sm' }> = ({ b, size = 'lg' }) => {
+  const { icon: Icon, hue } = TOPIC_STYLE[b.topic]
+  return (
+    <div
+      className={clsx(
+        'relative overflow-hidden border border-white/[0.07] bg-ink-950',
+        size === 'lg' ? 'aspect-[16/9] rounded-xl sm:aspect-[2/1]' : 'h-14 w-14 shrink-0 rounded-xl sm:h-16 sm:w-16'
+      )}
+      style={{
+        backgroundImage: `radial-gradient(120% 90% at 85% 0%, rgba(${hue},0.32), transparent 55%), radial-gradient(80% 80% at 0% 100%, rgba(${hue},0.12), transparent 60%)`,
+      }}
     >
-      {/* Blog Image with skeleton loader */}
-      <div className="relative overflow-hidden h-48 bg-gray-200">
-        {!imgLoaded && (
-          <div className="absolute inset-0 flex items-center justify-center bg-gray-200 animate-pulse z-10" />
-        )}
-        {blog.imageUrl ? (
-          <img
-            src={blog.imageUrl}
-            alt={blog.title || 'Blog image'}
-            className={`w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 ${imgLoaded ? 'opacity-100' : 'opacity-0'}`}
-            onLoad={() => setImgLoaded(true)}
-          />
-        ) : null}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
-      </div>
-      {/* Blog Title Only */}
-      <div className="p-6">
-        <h3 className="text-xl font-mono font-semibold text-gray-900 mb-0 group-hover:text-primary-600 transition-colors duration-100">
-          {blog.title || 'Untitled'}
-        </h3>
-      </div>
-    </motion.a>
+      {size === 'lg' && b.imageUrl && (
+        <img
+          src={b.imageUrl}
+          alt=""
+          loading="lazy"
+          className="absolute inset-0 h-full w-full object-cover opacity-60 mix-blend-luminosity transition-transform duration-700 group-hover:scale-[1.03]"
+          onError={e => ((e.currentTarget as HTMLImageElement).style.display = 'none')}
+        />
+      )}
+      <div className="bg-dots absolute inset-0 opacity-60" />
+      {size === 'lg' ? (
+        <>
+          <div className="absolute inset-0 bg-gradient-to-t from-ink-950 via-ink-950/30 to-transparent" />
+          <Icon className="absolute right-6 top-6 h-10 w-10 text-white/70" />
+          <span
+            aria-hidden
+            className="absolute bottom-3 left-5 select-none whitespace-nowrap font-serif text-[clamp(2.5rem,5.5vw,4.75rem)] italic leading-none text-white/[0.12]"
+          >
+            {b.topic}
+          </span>
+          <span className="absolute left-5 top-5 rounded-full border border-white/10 bg-ink-950/60 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.16em] text-ink-200 backdrop-blur">
+            Latest
+          </span>
+        </>
+      ) : (
+        <Icon className="absolute inset-0 m-auto h-5 w-5 text-white/75" />
+      )}
+    </div>
   )
 }
 
 const Blogs: React.FC = () => {
-  const [blogs, setBlogs] = useState<Blog[]>([])
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
+  const { posts, isLive } = useMediumPosts()
+  const [topic, setTopic] = useState<BlogTopic | 'All'>('All')
+  const [expanded, setExpanded] = useState(false)
 
-  useEffect(() => {
-    // Try to load from localStorage first
-    const cached = localStorage.getItem('mediumBlogs')
-    if (cached) {
-      try {
-        const parsed = JSON.parse(cached)
-        if (Array.isArray(parsed)) setBlogs(parsed)
-      } catch {}
-      setLoading(false)
-    }
-    // Always try to fetch fresh blogs
-    const fetchBlogs = async () => {
-      try {
-        const apiUrl = process.env.NODE_ENV === 'production' ? 'https://api.sa7vik.in/medium-blogs' : 'http://localhost:8000/medium-blogs';
-        const res = await fetch(apiUrl)
-        if (!res.ok) throw new Error("Failed to fetch blogs")
-        const data = await res.json()
-        // Limit to latest 4 blogs
-        const latestBlogs = data.slice(0, 4)
-        setBlogs(latestBlogs)
-        localStorage.setItem('mediumBlogs', JSON.stringify(latestBlogs))
-      } catch (err: any) {
-        setError(err.message || "Unknown error")
-        if (!cached) setBlogs(staticBlogs.slice(0, 4))
-      } finally {
-        setLoading(false)
-      }
-    }
-    fetchBlogs()
-  }, [])
+  const topics = useMemo(() => {
+    const counts = new Map<BlogTopic, number>()
+    posts.forEach(p => counts.set(p.topic, (counts.get(p.topic) || 0) + 1))
+    return [...counts.entries()].sort((a, b) => b[1] - a[1])
+  }, [posts])
+
+  const filtered = topic === 'All' ? posts : posts.filter(p => p.topic === topic)
+  const [featured, ...rest] = filtered
+  const LIST_LIMIT = 5
+  const visible = expanded ? rest : rest.slice(0, LIST_LIMIT)
 
   return (
-    <section id="blogs" className="section-padding bg-gray-50">
-      <div className="container-custom">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4 font-mono">
-            <span className="text-primary-600">const</span> <span className="text-gradient">blogs</span> = [];
-          </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto font-mono">
-            Technical articles and insights I share on Medium.
-          </p>
-        </motion.div>
-        {loading ? (
-          <div className="text-center text-gray-500 font-mono">Loading blogs...</div>
-        ) : error ? (
-          <div className="text-center text-red-500 font-mono">{error}</div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 relative">
-            {/* Animated gradient bar behind blog cards */}
-            <div className="absolute inset-0 flex justify-center items-center pointer-events-none z-0">
-              <div
-                className="h-96 w-full bg-gradient-to-r from-primary-500 via-secondary-400 to-accent-400 blur-3xl opacity-20 rounded-full animate-gradient-x"
-              />
-            </div>
-            {blogs.map((blog, index) => (
-              <BlogCard blog={blog} key={blog.mediumUrl || blog.title || index} />
-            ))}
+    <section id="writing" className="section border-t border-white/[0.05]">
+      <div className="container-x">
+        <SectionHeader
+          index="05"
+          label="Writing"
+          title={
+            <>
+              Notes from the <span className="serif-accent text-ink-300">engine room.</span>
+            </>
+          }
+          description="I write on Medium about AI engineering, distributed systems and the signal processing behind defence radar — explained from first principles."
+          action={
+            <a href={PROFILE.medium} target="_blank" rel="noopener noreferrer" className="btn-ghost">
+              <BookOpen className="h-4 w-4" /> Follow on Medium
+            </a>
+          }
+        />
+
+        {/* Topic filter */}
+        <Reveal className="mb-8">
+          <div role="tablist" aria-label="Filter articles by topic" className="flex flex-wrap items-center gap-2">
+            {(['All', ...topics.map(([t]) => t)] as const).map(t => {
+              const count = t === 'All' ? posts.length : topics.find(([x]) => x === t)?.[1]
+              const active = topic === t
+              return (
+                <button
+                  key={t}
+                  role="tab"
+                  aria-selected={active}
+                  onClick={() => {
+                    setTopic(t)
+                    setExpanded(false)
+                  }}
+                  className={clsx(
+                    'inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-sm transition-colors',
+                    active
+                      ? 'border-white/20 bg-white text-ink-950'
+                      : 'border-white/[0.08] bg-white/[0.02] text-ink-300 hover:border-white/15 hover:text-white'
+                  )}
+                >
+                  {t}
+                  <span className="font-mono text-[10px] text-ink-500">{count}</span>
+                </button>
+              )
+            })}
+            {isLive && (
+              <span className="ml-auto hidden items-center gap-1.5 font-mono text-[11px] text-ink-500 sm:inline-flex">
+                <span className="h-1.5 w-1.5 animate-pulse-dot rounded-full bg-mint-400" /> Synced from Medium
+              </span>
+            )}
           </div>
-        )}
+        </Reveal>
+
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={topic}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.25 }}
+            className="grid gap-4 lg:grid-cols-12"
+          >
+            {featured && (
+              <a
+                href={featured.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="card-surface group flex flex-col p-3 transition-colors hover:border-white/15 lg:col-span-7"
+              >
+                <Cover b={featured} />
+                <div className="flex flex-1 flex-col px-3 pb-3 pt-6">
+                  <Meta b={featured} />
+                  <h3 className="mt-3 text-2xl font-semibold leading-tight tracking-tight text-white sm:text-[1.75rem]">
+                    {featured.title}
+                  </h3>
+                  <p className="mt-3 text-[15px] leading-relaxed text-ink-400">{featured.excerpt}</p>
+                  <span className="mt-auto inline-flex items-center gap-1.5 pt-6 text-sm font-medium text-white">
+                    Read on Medium
+                    <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                  </span>
+                </div>
+              </a>
+            )}
+
+            {rest.length > 0 && (
+              <div className="card-surface flex flex-col lg:col-span-5">
+              <ul className="divide-y divide-white/[0.06]">
+                {visible.map(b => (
+                  <li key={b.url}>
+                    <a
+                      href={b.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group flex items-start gap-4 p-4 transition-colors first:rounded-t-2xl last:rounded-b-2xl hover:bg-white/[0.025] sm:p-5"
+                    >
+                      <Cover b={b} size="sm" />
+                      <div className="min-w-0 flex-1">
+                        <Meta b={b} />
+                        <h4 className="mt-1.5 text-[15px] font-medium leading-snug text-ink-100 transition-colors group-hover:text-white">
+                          {b.title}
+                        </h4>
+                      </div>
+                      <ArrowUpRight className="mt-1 h-4 w-4 shrink-0 text-ink-600 transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-white" />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+              {rest.length > LIST_LIMIT && (
+                <button
+                  type="button"
+                  onClick={() => setExpanded(x => !x)}
+                  className="mt-auto border-t border-white/[0.06] px-5 py-3.5 text-left font-mono text-[11px] uppercase tracking-[0.14em] text-ink-400 transition-colors hover:text-white"
+                >
+                  {expanded ? 'Show fewer' : `Show all ${rest.length + 1} articles`}
+                </button>
+              )}
+              </div>
+            )}
+          </motion.div>
+        </AnimatePresence>
       </div>
     </section>
   )
 }
 
-export default Blogs 
+export default Blogs

@@ -1,152 +1,80 @@
-import React from 'react'
-import { motion } from 'framer-motion'
-import { Mail, Github, Linkedin, MessageCircle } from 'lucide-react'
+import React, { useState } from 'react'
+import { BookOpen, Check, Copy, Github, Linkedin, Mail, Sparkles } from 'lucide-react'
+import { Reveal } from '../components/ui/primitives'
+import { PROFILE } from '../data/profile'
 
 const Contact: React.FC = () => {
+  const [copied, setCopied] = useState(false)
+
+  const copyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(PROFILE.email)
+      setCopied(true)
+      window.setTimeout(() => setCopied(false), 1800)
+    } catch {
+      window.location.href = `mailto:${PROFILE.email}`
+    }
+  }
+
   return (
-    <section className="section-padding">
-      <div className="container-custom">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4 font-mono">
-            <span className="text-primary-600">async</span> <span className="text-gradient">connect</span>()
+    <section id="contact" className="relative overflow-hidden border-t border-white/[0.05] pt-24 sm:pt-32">
+      <div aria-hidden className="pointer-events-none absolute inset-0">
+        <div className="bg-grid absolute inset-0 [mask-image:radial-gradient(ellipse_60%_70%_at_50%_100%,black,transparent)]" />
+        <div className="absolute bottom-[-20rem] left-1/2 h-[34rem] w-[56rem] -translate-x-1/2 rounded-full bg-accent-500/[0.12] blur-[120px]" />
+      </div>
+
+      <div className="container-x relative">
+        <Reveal className="mx-auto max-w-3xl text-center">
+          <span className="eyebrow justify-center">
+            <span className="text-accent-400">06</span>
+            <span className="h-px w-6 bg-ink-600" />
+            Contact
+          </span>
+          <h2 className="h-display mt-6 text-5xl leading-[1.02] sm:text-7xl">
+            Let’s build <span className="serif-accent text-shine">something real.</span>
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto font-mono">
-            Let's work together on your next project.
+          <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-ink-300 sm:text-lg">
+            Open to AI engineering roles, founding-team conversations and research collaborations. The fastest way to
+            reach me is email.
           </p>
-        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          {/* Contact Info */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <h3 className="text-2xl font-semibold text-gray-900 mb-6">
-              Let's Connect
-            </h3>
-            <div className="space-y-6">
-              <div className="flex items-center space-x-4">
-                <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center">
-                  <Mail className="w-6 h-6 text-primary-600" />
-                </div>
-                <div>
-                  <h4 className="font-mono font-medium text-gray-900">Email</h4>
-                  <a 
-                    href="mailto:your.email@example.com" 
-                    className="text-primary-600 hover:text-primary-700 transition-colors duration-200 font-mono"
-                  >
-                    your.email@example.com
-                  </a>
-                </div>
-              </div>
+          <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
+            <a href={`mailto:${PROFILE.email}`} className="btn-light">
+              <Mail className="h-4 w-4" /> {PROFILE.email}
+            </a>
+            <button type="button" onClick={copyEmail} className="btn-ghost" aria-live="polite">
+              {copied ? <Check className="h-4 w-4 text-mint-400" /> : <Copy className="h-4 w-4 text-ink-400" />}
+              {copied ? 'Copied' : 'Copy email'}
+            </button>
+            <a href="/chatbot" className="btn-ghost">
+              <Sparkles className="h-4 w-4 text-accent-400" /> Ask my AI first
+            </a>
+          </div>
+        </Reveal>
 
-              <div className="flex items-center space-x-4">
-                <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center">
-                  <Github className="w-6 h-6 text-primary-600" />
-                </div>
-                <div>
-                  <h4 className="font-mono font-medium text-gray-900">GitHub</h4>
-                  <a 
-                    href="https://github.com/yourusername" 
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-primary-600 hover:text-primary-700 transition-colors duration-200 font-mono"
-                  >
-                    github.com/yourusername
-                  </a>
-                </div>
-              </div>
-
-              <div className="flex items-center space-x-4">
-                <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center">
-                  <Linkedin className="w-6 h-6 text-primary-600" />
-                </div>
-                <div>
-                  <h4 className="font-mono font-medium text-gray-900">LinkedIn</h4>
-                  <a 
-                    href="https://linkedin.com/in/yourusername" 
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-primary-600 hover:text-primary-700 transition-colors duration-200 font-mono"
-                  >
-                    linkedin.com/in/yourusername
-                  </a>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Contact Form */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <h3 className="text-2xl font-mono font-semibold text-gray-900 mb-6">
-              Send a Message
-            </h3>
-            <form className="space-y-4">
-              <div>
-                <label htmlFor="name" className="block text-sm font-mono font-medium text-gray-700 mb-2">
-                  Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 font-mono"
-                  placeholder="Your name"
-                />
-              </div>
-              
-              <div>
-                <label htmlFor="email" className="block text-sm font-mono font-medium text-gray-700 mb-2">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 font-mono"
-                  placeholder="your.email@example.com"
-                />
-              </div>
-              
-              <div>
-                <label htmlFor="message" className="block text-sm font-mono font-medium text-gray-700 mb-2">
-                  Message
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  rows={4}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 resize-none font-mono"
-                  placeholder="Your message..."
-                />
-              </div>
-              
-              <button
-                type="submit"
-                className="btn-primary w-full font-mono"
+        <footer className="mt-24 flex flex-col items-center justify-between gap-6 border-t border-white/[0.06] py-8 sm:flex-row">
+          <p className="text-sm text-ink-500">© {new Date().getFullYear()} Satvik Singh. Built with React & Tailwind.</p>
+          <div className="flex items-center gap-1">
+            {[
+              { href: PROFILE.github, label: 'GitHub', icon: Github },
+              { href: PROFILE.linkedin, label: 'LinkedIn', icon: Linkedin },
+              { href: PROFILE.medium, label: 'Medium', icon: BookOpen },
+            ].map(({ href, label, icon: Icon }) => (
+              <a
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm text-ink-400 transition-colors hover:bg-white/[0.04] hover:text-white"
               >
-                <MessageCircle className="w-5 h-5 mr-2" />
-                Send Message
-              </button>
-            </form>
-          </motion.div>
-        </div>
+                <Icon className="h-3.5 w-3.5" /> {label}
+              </a>
+            ))}
+          </div>
+        </footer>
       </div>
     </section>
   )
 }
 
-export default Contact 
+export default Contact

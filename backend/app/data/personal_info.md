@@ -18,10 +18,14 @@ I am an AI Engineer & Researcher specializing in high-performance computing algo
   - Implementing quantum machine learning for 6G network error correction
 
 ## Professional Experience
-- **Software Development Engineer** at Symbian Health (Rikton Inc), Boston, Virginia
-  - Engineered NLP models for healthcare data processing
+- **Software Development Engineer** at Symbian Health (Rikton Inc), Boston (remote)
+  - Built four healthcare products end to end — problem discovery, model R&D, backend & APIs, product UI, deployment:
+    - **Symbian Health Radiology**: AI-assisted radiology platform — studies are ingested, triaged and pre-read by models; radiologists review AI findings and draft reports in one workspace
+    - **Scribe Notes**: ambient medical scribe that transcribes the patient visit and generates structured SOAP notes for clinician review
+    - **Fall Guard**: fall detection and real-time caregiver alerting for patients and elderly care
+    - **Credero**: provider credentialing automation — document parsing, primary-source verification and a tracked approval workflow
   - Deployed production APIs reducing operational time by 40%
-  - Integrated Amazon Health services and built scalable backend solutions
+  - Integrated Amazon Health services and built backend solutions improving response time by 60%
 
 - **Data Scientist** at Ai.Tennis, Boston, Virginia
   - Architected ML systems for tennis analytics
@@ -37,6 +41,13 @@ I am an AI Engineer & Researcher specializing in high-performance computing algo
 - **Email Marketing Agent**: AI-powered campaign automation at Rovlin.com
 - **MoneyInsight**: Smart investment allocation advisor with time series models
 - **Portfolio Chatbot**: AI-powered chatbot using RAG and LLM
+
+## Writing (Medium: medium.com/@sa7vik)
+- "AI Engineering Simplified" series: Basics of LLMs; the training journey of AI models; inconsistency and hallucination
+- How We Suppress Jamming in Defense Radar Using MVDR (Without Losing the Target)
+- Why Your Computer Can't Tell Time (And How Atomic Clocks Are Quietly Saving the World)
+- How Big Tech Keeps Your Data Safe: Replication in Distributed Systems
+- Cracking Linear Algebra (GATE preparation series)
 
 ## Education
 - **Bachelor of Technology in Information Technology** from Jabalpur Engineering College

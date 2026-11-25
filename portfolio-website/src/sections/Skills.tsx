@@ -1,66 +1,70 @@
 import React from 'react'
-import { motion } from 'framer-motion'
+import { Award, BrainCircuit, Gauge, Layers, Workflow } from 'lucide-react'
+import { Reveal, SectionHeader, SpotlightCard } from '../components/ui/primitives'
+import { ACHIEVEMENTS, SKILLS } from '../data/profile'
+
+const ICONS = [Workflow, BrainCircuit, Gauge, Layers]
 
 const Skills: React.FC = () => {
-  const skills = [
-    // Programming Languages
-    'Python', 'C', 'C++',
-    // Libraries and Tools
-    'TensorFlow', 'PyTorch', 'OpenCV', 'Docker', 'AWS-CDK', 'FastAPI', 'Django REST', 'MKL Intel',
-    // AI Architectures
-    'Agentic AI', 'LangGraph', 'LangChain', 'RAG', 'Faiss', 'Pinecone', 'MCP server-client', 'Guardrails',
-    // ML Architectures
-    'Convolutional Neural Networks', 'YOLO', 'Transformers', 'RNN', 'LSTM', 'Attention Mechanisms',
-    // Additional Technologies
-    'Computer Vision', 'Machine Learning', 'Signal Processing', 'GPU Programming', 'NLP', 'Automation',
-    // Network Programming
-    'Unix Network Programming', 'Socket Programming', 'Django', 'Git', 'GitHub', 'Google Cloud',
-    // Languages
-    'English (Professional)', 'Hindi (Native)', 'German (Elementary)'
-  ]
-
   return (
-    <section className="section-padding">
-      <div className="container-custom">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4 font-mono">
-            <span className="text-primary-600">const</span> <span className="text-gradient">skills</span> = [];
-          </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto font-mono">
-            Technologies and tools I use to build solutions.
-          </p>
-        </motion.div>
+    <section id="toolkit" className="section border-t border-white/[0.05]">
+      <div className="container-x">
+        <SectionHeader
+          index="04"
+          label="Toolkit"
+          title={
+            <>
+              Research depth, <span className="serif-accent text-ink-300">product instincts.</span>
+            </>
+          }
+        />
 
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          viewport={{ once: true }}
-          className="flex flex-wrap justify-center gap-3"
-        >
-          {skills.map((skill, index) => (
-            <motion.span
-              key={skill}
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.3, delay: index * 0.05 }}
-              viewport={{ once: true }}
-              whileHover={{ scale: 1.05 }}
-              className="px-4 py-2 bg-gray-900 text-white border border-gray-700 rounded-lg font-mono text-sm hover:bg-primary-600 hover:border-primary-500 transition-all duration-200 cursor-pointer"
-            >
-              {skill}
-            </motion.span>
-          ))}
-        </motion.div>
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {SKILLS.map((g, i) => {
+            const Icon = ICONS[i % ICONS.length]
+            return (
+              <Reveal key={g.group} delay={i * 0.05} className="flex">
+                <SpotlightCard className="w-full p-6">
+                  <div className="flex items-center gap-3">
+                    <span className="grid h-9 w-9 place-items-center rounded-lg border border-white/[0.08] bg-white/[0.03] text-ink-200">
+                      <Icon className="h-4 w-4" />
+                    </span>
+                    <h3 className="font-medium text-white">{g.group}</h3>
+                  </div>
+                  <div className="mt-5 flex flex-wrap gap-1.5">
+                    {g.items.map(s => (
+                      <span key={s} className="chip !text-[12px] !text-ink-200">
+                        {s}
+                      </span>
+                    ))}
+                  </div>
+                </SpotlightCard>
+              </Reveal>
+            )
+          })}
+
+          <Reveal delay={0.2} className="flex md:col-span-2">
+            <SpotlightCard className="w-full p-6">
+              <div className="flex items-center gap-3">
+                <span className="grid h-9 w-9 place-items-center rounded-lg border border-accent-500/25 bg-accent-500/10 text-accent-300">
+                  <Award className="h-4 w-4" />
+                </span>
+                <h3 className="font-medium text-white">Recognition</h3>
+              </div>
+              <dl className="mt-5 grid gap-x-8 gap-y-4 sm:grid-cols-2">
+                {ACHIEVEMENTS.map(a => (
+                  <div key={a.title} className="border-l border-white/10 pl-4">
+                    <dt className="text-sm font-medium text-ink-100">{a.title}</dt>
+                    <dd className="mt-0.5 text-sm text-ink-400">{a.detail}</dd>
+                  </div>
+                ))}
+              </dl>
+            </SpotlightCard>
+          </Reveal>
+        </div>
       </div>
     </section>
   )
 }
 
-export default Skills 
+export default Skills
