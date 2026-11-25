@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { BookOpen, Check, Copy, Github, Linkedin, Mail, Sparkles } from 'lucide-react'
+import { BookOpen, Check, Copy, Github, Linkedin, Mail } from 'lucide-react'
 import { Reveal } from '../components/ui/primitives'
 import { PROFILE } from '../data/profile'
 
@@ -46,9 +46,6 @@ const Contact: React.FC = () => {
               {copied ? <Check className="h-4 w-4 text-mint-400" /> : <Copy className="h-4 w-4 text-ink-400" />}
               {copied ? 'Copied' : 'Copy email'}
             </button>
-            <a href="/chatbot" className="btn-ghost">
-              <Sparkles className="h-4 w-4 text-accent-400" /> Ask my AI first
-            </a>
           </div>
         </Reveal>
 

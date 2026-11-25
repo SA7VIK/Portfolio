@@ -115,12 +115,11 @@ export const PROJECTS: Project[] = [
     liveUrl: 'https://moneyinsight.onrender.com',
   },
   {
-    title: 'Portfolio AI',
+    title: 'Portfolio Chatbot',
     description:
-      'The assistant on this site. Retrieval-augmented generation over my background, served from FastAPI with a FAISS index.',
+      'A personal AI assistant that answers questions about my background using retrieval-augmented generation, served from FastAPI with a FAISS index.',
     tags: ['RAG', 'FAISS', 'FastAPI'],
     githubUrl: 'https://github.com/sa7vik/portfolio-chatbot',
-    liveUrl: '/chatbot',
   },
 ]
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import { motion } from 'framer-motion'
-import { ArrowRight, ArrowUpRight, Github, Linkedin, Mail, Sparkles } from 'lucide-react'
+import { ArrowDown, ArrowRight, ArrowUpRight, Github, Linkedin, Mail } from 'lucide-react'
 import { PROFILE } from '../data/profile'
 
 const STATS = [
@@ -61,9 +61,9 @@ const Hero: React.FC = () => {
         </motion.p>
 
         <motion.div {...fade(0.24)} className="mt-10 flex flex-wrap items-center justify-center gap-3">
-          <a href="/chatbot" className="btn-light">
-            <Sparkles className="h-4 w-4" />
-            Ask my AI anything
+          <a href="#work" className="btn-light">
+            See my work
+            <ArrowDown className="h-4 w-4" />
           </a>
           <a href={PROFILE.resume} target="_blank" rel="noopener noreferrer" className="btn-ghost">
             View resume <ArrowUpRight className="h-4 w-4 text-ink-400" />

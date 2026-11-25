@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { ArrowUpRight, Menu, Sparkles, X } from 'lucide-react'
+import { ArrowUpRight, Menu, X } from 'lucide-react'
 import clsx from 'clsx'
 import { PROFILE } from '../data/profile'
 
@@ -63,9 +63,8 @@ const Navbar: React.FC = () => {
           >
             Resume <ArrowUpRight className="h-3.5 w-3.5" />
           </a>
-          <a href="/chatbot" className="btn-light !px-4 !py-2">
-            <Sparkles className="h-3.5 w-3.5" />
-            Ask my AI
+          <a href="#contact" className="btn-light !px-4 !py-2">
+            Get in touch
           </a>
           <button
             type="button"
