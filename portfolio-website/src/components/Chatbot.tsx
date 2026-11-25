@@ -145,7 +145,7 @@ const Chatbot: React.FC = () => {
                 Ask me <span className="serif-accent text-ink-300">anything.</span>
               </h1>
               <p className="mx-auto mt-3 max-w-md text-sm text-ink-400">
-                Experience, the products I built at Symbian Health, research at DRDO, or what I’m writing about.
+                My work at Symbian Health, research at DRDO, or what I’m writing about.
               </p>
             </motion.div>
           )}

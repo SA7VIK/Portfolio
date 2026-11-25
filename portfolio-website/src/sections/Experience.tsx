@@ -19,9 +19,9 @@ const Experience: React.FC = () => {
             </h2>
             <div className="mt-6 space-y-4 text-base leading-relaxed text-ink-300">
               <p>
-                I work where performance meets real-world consequence. At DRDO I write the low-level signal-processing
-                code behind airborne surveillance radar. Before that I built clinical AI products used by healthcare
-                teams.
+                I work where performance meets real-world consequence. Today I’m a Software Engineer at Symbian Health,
+                building clinical AI products for healthcare teams. In between, at DRDO, I wrote the low-level
+                signal-processing code behind airborne surveillance radar.
               </p>
               <p className="text-ink-400">
                 The common thread: research-grade models, made fast and reliable enough to depend on.

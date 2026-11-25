@@ -10,7 +10,7 @@ const STATS = [
   { value: 'SIH ’23', label: 'National finalist among 100,000+ participants' },
 ]
 
-const ORGS = ['DRDO', 'Symbian Health', 'Ai.Tennis', 'IIT Jodhpur', 'Codeyoung', 'Google Developer Student Clubs']
+const ORGS = ['Symbian Health', 'DRDO', 'Ai.Tennis', 'IIT Jodhpur', 'Codeyoung', 'Google Developer Student Clubs']
 
 const fade = (delay: number) => ({
   initial: { opacity: 0, y: 18, filter: 'blur(6px)' },
@@ -38,7 +38,7 @@ const Hero: React.FC = () => {
             <span className="h-1.5 w-1.5 animate-pulse-dot rounded-full bg-mint-400" />
             Now
           </span>
-          Researcher at DRDO · 4 products shipped at Symbian Health
+          Software Engineer at Symbian Health
           <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
         </motion.a>
 
@@ -55,9 +55,9 @@ const Hero: React.FC = () => {
           {...fade(0.16)}
           className="mx-auto mt-7 max-w-2xl text-center text-base leading-relaxed text-ink-300 sm:text-lg"
         >
-          I’m <span className="text-white">Satvik Singh</span>, an AI engineer who takes ideas from research to
-          production — real-time radar signal processing at DRDO, and four healthcare products built from zero at
-          Symbian Health.
+          I’m <span className="text-white">Satvik Singh</span>, a software engineer at Symbian Health who takes ideas
+          from research to production — four healthcare products built from zero, and real-time radar signal
+          processing at DRDO.
         </motion.p>
 
         <motion.div {...fade(0.24)} className="mt-10 flex flex-wrap items-center justify-center gap-3">

@@ -25,9 +25,9 @@ const Work: React.FC = () => {
           }
           description={
             <>
-              As a Software Development Engineer at <span className="text-white">Symbian Health</span> I owned each of
-              these products end to end: scoping the problem with clinicians, building the models, writing the
-              backend and the interface, and running it in production.
+              At <span className="text-white">Symbian Health</span>, where I’m currently a Software Engineer, I’ve owned
+              each of these products end to end: scoping the problem with clinicians, building the models, writing
+              the backend and the interface, and running it in production.
             </>
           }
         />

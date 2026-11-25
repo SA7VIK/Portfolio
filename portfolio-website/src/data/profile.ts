@@ -19,12 +19,19 @@ export interface Experience {
 
 export const EXPERIENCE: Experience[] = [
   {
+    role: 'Software Engineer',
+    company: 'Symbian Health (Rikton Inc)',
+    location: 'Boston, US · Remote',
+    current: true,
+    summary:
+      'Back at Symbian Health after my time at DRDO, building on the healthcare products I first shipped here as a Software Development Engineer.',
+  },
+  {
     role: 'Junior Research Fellow',
     company: 'DRDO — Centre for Airborne Systems',
     location: 'Bengaluru, India',
-    current: true,
     summary:
-      'Optimizing next-generation airborne radar for 360° surveillance coverage. High-performance signal processing in C with Intel MKL / BLAS.',
+      'Optimized next-generation airborne radar for 360° surveillance coverage. High-performance signal processing in C with Intel MKL / BLAS.',
     highlights: [
       '200+ GB/hour of real-time signal data processed',
       '30% efficiency improvement in the processing chain',

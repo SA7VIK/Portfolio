@@ -1,7 +1,7 @@
 # Personal Information - Satvik Singh
 
 ## About Me
-I am an AI Engineer & Researcher specializing in high-performance computing algorithms and intelligent solutions. I work on cutting-edge technologies including surveillance radar systems, quantum machine learning for 6G networks, and agent-to-agent MCP frameworks. I'm passionate about making machines think faster than humans can blink.
+I am a Software Engineer at Symbian Health and an AI engineer & researcher specializing in high-performance computing algorithms and intelligent solutions. I work on cutting-edge technologies including surveillance radar systems, quantum machine learning for 6G networks, and agent-to-agent MCP frameworks. I'm passionate about making machines think faster than humans can blink.
 
 ## Technical Expertise
 - **High-Performance Computing**: BLAS/MKL optimization, real-time signal processing
@@ -12,13 +12,15 @@ I am an AI Engineer & Researcher specializing in high-performance computing algo
 - **Cloud & DevOps**: AWS, Docker, Kubernetes, CI/CD pipelines
 
 ## Current Work
-- **Junior Research Fellow** at DRDO - Centre for Airborne Systems, Bengaluru
-  - Architecting surveillance radar systems with BLAS/MKL optimization
-  - Processing 200+ GB/hour of real-time signal data with 30% improved efficiency
-  - Implementing quantum machine learning for 6G network error correction
+- **Software Engineer** at Symbian Health (Rikton Inc), Boston (remote) — rejoined after DRDO
 
 ## Professional Experience
-- **Software Development Engineer** at Symbian Health (Rikton Inc), Boston (remote)
+- **Junior Research Fellow** at DRDO - Centre for Airborne Systems, Bengaluru
+  - Architected surveillance radar systems with BLAS/MKL optimization
+  - Processed 200+ GB/hour of real-time signal data with 30% improved efficiency
+  - Implemented quantum machine learning for 6G network error correction
+
+- **Software Development Engineer** at Symbian Health (Rikton Inc), Boston (remote) — first stint
   - Built four healthcare products end to end — problem discovery, model R&D, backend & APIs, product UI, deployment:
     - **Symbian Health Radiology**: AI-assisted radiology platform — studies are ingested, triaged and pre-read by models; radiologists review AI findings and draft reports in one workspace
     - **Scribe Notes**: ambient medical scribe that transcribes the patient visit and generates structured SOAP notes for clinician review
